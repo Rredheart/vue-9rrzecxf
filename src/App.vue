@@ -1,5 +1,5 @@
 <template>
-<!-- Önceki template kısmı aynı kalacak -->
+  <!-- Önceki template kısmı aynı kalacak -->
 </template>
 
 <script lang="ts" setup>
@@ -200,36 +200,6 @@ if (moodChartContainer.value) {
   moodChart = echarts.init(moodChartContainer.value);
   updateMoodChart();
 }
-};
-
-const updateMoodChart = () => {
-if (!moodChart) return;
-
-const moodCounts = {
-  happy: moodRecords.value.filter(m => m.mood === 'happy').length,
-  calm: moodRecords.value.filter(m => m.mood === 'calm').length,
-  normal: moodRecords.value.filter(m => m.mood === 'normal').length,
-  anxious: moodRecords.value.filter(m => m.mood === 'anxious').length,
-  sad: moodRecords.value.filter(m => m.mood === 'sad').length
-};
-
-const option = {
-  color: ['#10b981', '#3b82f6', '#eab308', '#f97316', '#ef4444'],
-  series: [{
-    type: 'pie',
-    radius: ['40%', '70%'],
-    data: [
-      { value: moodCounts.happy, name: 'Mutlu' },
-      { value: moodCounts.calm, name: 'Sakin' },
-      { value: moodCounts.normal, name: 'Normal' },
-      { value: moodCounts.anxious, name: 'Endişeli' },
-      { value: moodCounts.sad, name: 'Üzgün' }
-    ]
-  }]
-};
-
-moodChart.setOption(option);
-};
 
 // Meditasyon İlerleme Grafiği
 const initMeditationChart = () => {
@@ -237,30 +207,6 @@ if (meditationChartContainer.value) {
   meditationChart = echarts.init(meditationChartContainer.value);
   updateMeditationChart();
 }
-};
-
-const updateMeditationChart = () => {
-if (!meditationChart) return;
-
-const meditationMinutes = activityRecords.value
-  .filter(a => a.type === 'meditation')
-  .reduce((sum, a) => sum + a.duration, 0);
-
-const progress = Math.min(100, (meditationMinutes / 160) * 100);
-
-const option = {
-  series: [{
-    type: 'pie',
-    radius: ['80%', '100%'],
-    data: [
-      { value: progress, name: 'Completed', itemStyle: { color: '#818cf8' } },
-      { value: 100 - progress, name: 'Remaining', itemStyle: { color: '#e0e7ff' } }
-    ]
-  }]
-};
-
-meditationChart.setOption(option);
-};
 
 // Grafik Güncelleme
 const updateCharts = () => {
